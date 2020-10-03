@@ -1,0 +1,12 @@
+{
+  "appId": "hubol.awesome",
+  "productName": "Awesome App",
+  "directories": {
+    "output": "dist"
+  },
+  "files": [ "app/**/*", "index.js", "icon.png" ],
+  "win": {
+    "target": "zip"
+  },
+  "icon": "icon.png"
+}
