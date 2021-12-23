@@ -9,7 +9,7 @@ int main(int argc, char** argv)
         return errno;
 
     char newCWD[strlen(cwd)+10];
-    sprintf(newCWD, "%s\\goal\\bin", cwd);
+    sprintf(newCWD, "%s\\bin", cwd);
 
     int r = chdir(newCWD);
     if(r != 0)
