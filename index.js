@@ -9,7 +9,9 @@ let window;
 
 function createWindow() {
     window = new BrowserWindow({ autoHideMenuBar: true, fullscreen: true });
-
+    const env = process.env;
+    const a = process.env.PORTABLE_EXECUTABLE_DIR;
+    window.webContents.executeJavaScript(`console.log("${a}");`);
     window.loadURL(`file://${path.join(__dirname, "app/index.html")}`);
     window.on("closed", () => (window = null));
 }
