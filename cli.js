@@ -7,6 +7,7 @@ const productName = process.env.PRODUCT_NAME || "Electron App";
 const platform = process.env.PLATFORM || "win";
 
 const isWin = platform === 'win';
+const isMac = platform === 'mac';
 
 function target() {
     if (isWin)
@@ -32,6 +33,12 @@ function target() {
                 console.log('...Done with Post-artifact build.');
             }
         };
+    if (isMac)
+        return {
+            mac: {
+                target: 'dir'
+            }
+        }
     return {};
 }
 
@@ -45,6 +52,7 @@ async function main() {
             name: appId,
             description: productName
         },
+        publish: "never",
         ...target()
     }
     await build({ config });
