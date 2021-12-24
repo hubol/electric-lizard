@@ -15,6 +15,8 @@ function target() {
                 target: 'dir',
             },
             afterAllArtifactBuild: async c => {
+                const rcedit = require("rcedit");
+
                 console.log('Post-artifact build...');
                 console.log(c);
                 const productName = c.configuration.productName;
@@ -25,6 +27,7 @@ function target() {
                 await rename('./dist/win-unpacked', './dist/win/bin');
                 await rename(`./dist/win/bin/${exeName}`, './dist/win/bin/app.exe');
                 await copyFile(`./boot.exe`, './dist/win/app.exe');
+                await rcedit('./dist/win/app.exe', { "version-string": { ProductName: productName, FileDescription: productName }, icon: './dist/.icon-ico/icon.ico' });
                 await rename(`./dist/win/app.exe`, `./dist/win/${exeName}`);
                 console.log('...Done with Post-artifact build.');
             }
