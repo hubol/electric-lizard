@@ -15,7 +15,7 @@ inputs:
     required: true
   dst-artifact:
     description: Destination artifact name
-    required: true
+    required: false
   platform:
     description: Platform. Can be "win" or "mac".
     required: true
@@ -47,6 +47,7 @@ runs:
         PRODUCT_NAME: ${{ inputs.product-name }}
         PLATFORM: ${{ inputs.platform }}
     - uses: actions/upload-artifact@v2
+      if: ${{ inputs.dst-artifact }}
       with:
         name: ${{ inputs.dst-artifact }}
         path: dist/${{ inputs.platform }}
