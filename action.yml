@@ -23,6 +23,8 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v2          
+      with:
+        repository: hubol/electric-lizard
     - uses: timheuer/base64-to-file@v1.1
       with:
         fileName: 'icon.png'
