@@ -41,6 +41,10 @@ async function main() {
         appId,
         productName,
         files: [ "app/**/*", "index.js", "icon.png" ],
+        extraMetadata: {
+            name: appId,
+            description: productName
+        },
         ...target()
     }
     await build({ config });
