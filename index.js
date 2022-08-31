@@ -12,7 +12,7 @@ let window;
 
 function getStorableWindowProps(window) {
     const [width, height] = window.getSize();
-    return { width, height, fullscreen: window.isFullScreen() };
+    return { width, height, fullscreen: window.isFullScreen() || undefined };
 }
 
 function createWindow() {
@@ -30,10 +30,7 @@ function createWindow() {
 
 app.on("ready", createWindow);
 
-app.on("window-all-closed", () => {
-    if (process.platform !== "darwin")
-        app.quit();
-});
+app.on("window-all-closed", () => app.quit());
 
 app.on("activate", () => {
     if (window === null)
