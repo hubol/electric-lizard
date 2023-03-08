@@ -46,6 +46,8 @@ runs:
         APP_ID: ${{ inputs.app-id }}
         PRODUCT_NAME: ${{ inputs.product-name }}
         PLATFORM: ${{ inputs.platform }}
+    - run: mv dist/linux-unpacked dist/linux ;
+      shell: bash
     - uses: actions/upload-artifact@v2
       if: ${{ inputs.dst-artifact }}
       with:
