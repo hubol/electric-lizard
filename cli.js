@@ -8,6 +8,7 @@ const platform = process.env.PLATFORM || "win";
 
 const isWin = platform === 'win';
 const isMac = platform === 'mac';
+const isLinux = platform === 'linux';
 
 function target() {
     if (isWin)
@@ -39,6 +40,13 @@ function target() {
                 target: 'dir'
             }
         }
+    if (isLinux) {
+        return {
+            linux: {
+                target: 'dir'
+            }
+        }
+    }
     return {};
 }
 
@@ -52,7 +60,7 @@ async function main() {
             name: appId,
             description: productName
         },
-        publish: "never",
+        publish: null,
         ...target()
     }
     await build({ config });

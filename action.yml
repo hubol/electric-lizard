@@ -17,7 +17,7 @@ inputs:
     description: Destination artifact name
     required: false
   platform:
-    description: Platform. Can be "win" or "mac".
+    description: Platform. Can be "win", "linux", or "mac".
     required: true
 runs:
   using: "composite"
