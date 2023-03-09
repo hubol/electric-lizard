@@ -46,7 +46,7 @@ runs:
         APP_ID: ${{ inputs.app-id }}
         PRODUCT_NAME: ${{ inputs.product-name }}
         PLATFORM: ${{ inputs.platform }}
-    - run: mv dist/linux-unpacked dist/linux ;
+    - run: mv dist/linux-unpacked dist/linux || echo "No dist/linux-unpacked directory to rename"
       shell: bash
     - uses: actions/upload-artifact@v2
       if: ${{ inputs.dst-artifact }}
