@@ -21,6 +21,7 @@
     "rcedit": "^3.0.1"
   },
   "dependencies": {
-    "electron-store": "^8.0.1"
+    "electron-store": "^8.0.1",
+    "steamworks.js": "^0.0.29"
   }
 }

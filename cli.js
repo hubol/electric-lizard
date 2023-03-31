@@ -55,7 +55,7 @@ async function main() {
         directories: { output: 'dist' },
         appId,
         productName,
-        files: [ "app/**/*", "index.js", "icon.png" ],
+        files: [ "app/**/*", "index.js", "preload.js", "icon.png" ],
         extraMetadata: {
             name: appId,
             description: productName
