@@ -43,16 +43,42 @@ app.on("activate", () => {
         createWindow();
 });
 
-const steamworks = require('steamworks.js')
-const client = steamworks.init(2365560);
+const lizardConfig = require('./lizard.json');
 
-const achievementNames = [ 'defeatDesertBoss', 'defeatJungleBoss', 'defeatVolcanoBoss', 'defeatFinalBoss', 'completeGame' ];
+if (!lizardConfig.steamworksAppId)
+    throw new Error(`Missing steamworksAppId in lizard.json!`);
 
-function activateAchievement(name) {
-    if (!achievementNames.includes(name))
-        return console.error(`Attempting to activate invalid achievement:`, name);
+const steamworks = require('steamworks.js');
+let steamworksClient;
 
-    console.log(`Attempting to activate achievement:`, name)
-    client.achievement.activate(name);
-    client.stats.store();
+function tryCreateSteamworksClient() {
+    if (steamworksClient) {
+        console.info(`Steamworks client already exists. Not recreating.`);
+        return;
+    }
+    try {
+        steamworksClient = steamworks.init(Number(lizardConfig.steamworksAppId));
+    }
+    catch (e) {
+        console.info(`An error occurred while creating the steamworks client`, e);
+    }
+}
+
+tryCreateSteamworksClient();
+
+function activateAchievement(name, retryTimeoutMs = 1000) {
+    console.log(`Attempting to activate achievement:`, name, `...`);
+    try {
+        const achievementActivateResult = steamworksClient.achievement.activate(name);
+        console.log(`steamworksClient.achievement.activate("${name}") returned`, achievementActivateResult);
+        if (!achievementActivateResult)
+            throw new Error(`steamworksClient.achievement.activate("${name}") returned ${achievementActivateResult}`);
+    }
+    catch (e) {
+        console.info(`An error occurred while activating the achievement with name=${name}`, e);
+        console.info(`Trying to create steamworks client...`);
+        tryCreateSteamworksClient();
+        console.info(`Retrying activateAchievement(${name}) in ${retryTimeoutMs}ms...`);
+        setTimeout(() => activateAchievement(name, Math.min(15_000, retryTimeoutMs * 2)), retryTimeoutMs);
+    }
 }
