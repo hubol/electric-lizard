@@ -25,9 +25,9 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2          
+    - uses: actions/checkout@v3
       with:
-        repository: hubol/electric-lizard
+        ref: steamy
     - uses: timheuer/base64-to-file@v1.1
       with:
         fileName: 'icon.png'
