@@ -40,8 +40,6 @@ runs:
         cache: 'npm'
     - run: npm ci
       shell: bash
-    - run: ls -l && cd .. && ls - l
-      shell: bash
     - uses: maxgfr/github-change-json@main
       with:
         key: 'steamworksAppId'
