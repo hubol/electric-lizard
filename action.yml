@@ -23,9 +23,12 @@ runs:
   using: "composite"
   steps:
     - uses: actions/checkout@v4
+      env:
+        GITHUB_ACTION_REPOSITORY: ${{ github.action_repository }}
+        GITHUB_ACTION_REF: ${{ github.action_ref }}
       with:
-        repository: hubol/electric-lizard
-        ref: ${{ github.action_ref }}
+        repository: '${{ env.GITHUB_ACTION_REPOSITORY }}'
+        ref: '${{ env.GITHUB_ACTION_REF }}'
     - uses: timheuer/base64-to-file@v1.1
       with:
         fileName: 'icon.png'
