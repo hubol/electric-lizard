@@ -25,7 +25,7 @@ runs:
     - uses: actions/checkout@v4
       with:
         repository: hubol/electric-lizard
-        ref: $ {{ github.action_ref }}
+        ref: ${{ github.action_ref }}
     - uses: timheuer/base64-to-file@v1.1
       with:
         fileName: 'icon.png'
