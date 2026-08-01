@@ -30,10 +30,9 @@ runs:
         fileName: 'icon.png'
         fileDir: './'
         encodedString: ${{ inputs.icon-base64 }}
-    - uses: actions/setup-node@v2
+    - uses: actions/setup-node@v4
       with:
-        node-version: '12'
-        cache: 'npm'
+        node-version: 16
     - run: npm ci
       shell: bash
     - uses: actions/download-artifact@v4
