@@ -22,7 +22,7 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v2          
+    - uses: actions/checkout@v4
       with:
         repository: hubol/electric-lizard
     - uses: timheuer/base64-to-file@v1.1
@@ -36,7 +36,7 @@ runs:
         cache: 'npm'
     - run: npm ci
       shell: bash
-    - uses: actions/download-artifact@v2
+    - uses: actions/download-artifact@v4
       with:
         name: ${{ inputs.src-artifact }}
         path: app
@@ -48,7 +48,7 @@ runs:
         PLATFORM: ${{ inputs.platform }}
     - run: mv dist/linux-unpacked dist/linux || echo "No dist/linux-unpacked directory to rename"
       shell: bash
-    - uses: actions/upload-artifact@v2
+    - uses: actions/upload-artifact@v4
       if: ${{ inputs.dst-artifact }}
       with:
         name: ${{ inputs.dst-artifact }}
