@@ -48,7 +48,7 @@ runs:
         path: ./lizard.json
         changes: |
           [
-            {"key": "screensCount", "value": ${{ inputs.screens-count }} },
+            {"key": "screensCount", "value": ${{ inputs.screens-count }} }
           ]
     - uses: actions/download-artifact@v4
       with:
