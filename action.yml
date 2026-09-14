@@ -10,6 +10,10 @@ inputs:
   product-name:
     description: Product name
     required: true
+  screens-count:
+    description: Number of screens
+    required: false
+    default: "1"
   icon-base64:
     description: Icon base64 png
     required: true
@@ -39,6 +43,13 @@ runs:
         node-version: 24
     - run: npm ci
       shell: bash
+    - uses: maxgfr/github-change-json@main
+      with:
+        path: ./lizard.json
+        changes: |
+          [
+            {"key": "screensCount", "value": ${{ inputs.screens-count }} },
+          ]
     - uses: actions/download-artifact@v4
       with:
         name: ${{ inputs.src-artifact }}

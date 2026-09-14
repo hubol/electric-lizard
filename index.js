@@ -5,20 +5,56 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require("path");
 
-let window;
+const lizardConfig = require("./lizard.json");
 
-function createWindow() {
-    window = new BrowserWindow({ autoHideMenuBar: true, maximizable: false, fullscreen: true });
-    window.loadURL(`file://${path.join(__dirname, "app/index.html")}`);
-
-    window.on("closed", () => window = null);
+function parseInt(string) {
+    const number = Number.parseInt(string ?? "NaN");
+    return Number.isNaN(number) ? null : number;
 }
 
-app.on("ready", createWindow);
+function createWindows() {
+    const displays = electron.screen.getAllDisplays();
 
-app.on("window-all-closed", () => app.quit());
+    for (let screenIndex = 0; screenIndex < parseInt(lizardConfig.screensCount) ?? 1; screenIndex++) {
+        const display = displays[screenIndex] ?? displays[displays.length - 1];
+        const options = getBrowserWindowOptions(screenIndex, display);
+        const window = new BrowserWindow(options);
+        window.loadURL(`file://${path.join(__dirname, "app/index.html")}?screenIndex=${screenIndex}`);
 
-app.on("activate", () => {
-    if (window === null)
-        createWindow();
-});
+        window.on("closed", () => app.quit());
+    }
+}
+
+/**
+ * 
+ * @param {number} screenIndex 
+ * @param {Electron.Display} display 
+ * @returns {Electron.BrowserWindowConstructorOptions}
+ */
+function getBrowserWindowOptions(screenIndex, display) {
+    let { x, y, width, height } = display.workArea;
+
+    if (screenIndex === 0) {
+        return { autoHideMenuBar: true, maximizable: false, fullscreen: true, x, y };
+    }
+    y -= 1;
+    width += 2;
+    height += 2
+
+    return {
+        autoHideMenuBar: true,
+        maximizable: true,
+        fullscreenable: false,
+        width,
+        height,
+        roundedCorners: false,
+        hasShadow: false,
+        resizable: false,
+        focusable: false,
+        frame: false,
+        x,
+        y,
+    }
+}
+
+app.on("ready", createWindows);
