@@ -46,10 +46,9 @@ runs:
     - uses: maxgfr/github-change-json@main
       with:
         path: ./lizard.json
-        changes: |
-          [
-            {"key": "screensCount", "value": ${{ inputs.screens-count }} }
-          ]
+        key: 'screensCount'
+        value: ${{ inputs.screens-count }}
+        type: 'number'
     - uses: actions/download-artifact@v4
       with:
         name: ${{ inputs.src-artifact }}
